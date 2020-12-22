@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <title>Head First Lounge Directions</title>
+  </head>
+  <body>
+    <script>
+      ///这里的代码是阅读阮一峰 es6  generator 函数 异步 时写的
+      fs.readFile("/etc/passwd", "utf-8", function (err, data) {
+        if (err) throw err;
+        console.log(data);
+      });
+
+      function* asyncJob() {
+        /// 其他代码
+        var f = yield readFile(fileA);
+        /// 其他代码
+      }
+
+      ///协程的Generator函数实现
+      function* gen(x) {
+        var y = yield x + 2;
+        return y;
+      }
+
+      var g = gen(1);
+      g.next(); /// {value:3, done: false}
+      g.next(); /// {value:undefined., done: true}
+
+      ///Generator函数的数据交换和错误处理
+
+      /// 数据交换
+      function* gen(x) {
+        var y = yield x + 2;
+        return y;
+      }
+      var g = gen(1);
+      g.next(); ///{value: 3, done: false}
+      g.next(2); ///{value:2, done: true}
+
+      /// 错误处理
+      function* gen(x) {
+        try {
+          var y = yield x + 2;
+        } catch (e) {
+          console.log(e);
+        }
+        return y;
+      }
+      var g = gen(1);
+      g.next();
+      g.throw("出错了."); ///console.log("出错了")
+
+      ///异步任务的封装
+      var fetch = require("node-fetch");
+      function* gen() {
+        var url = "https://api.github.com/users/github";
+        var result = yield fetch(url);
+        console.log(result.bio);
+      }
+
+      var g = gen();
+      var result = g.next();
+      result.value
+        .then(function (data) {
+          console.log("json===", data.json);
+          return data.json();
+        })
+        .then(function (data) {
+          let a = g.next(data);
+          console.log("end===", a);
+        });
+
+      ///thunk函数
+      ///参数的求值策略
+      var x = 1;
+      function f(m) {
+        return m * 2;
+      }
+      f(x + 5);
+      ///thunk函数的含义
+      function f(m) {
+        return m * 2;
+      }
+      f(x + 5);
+      ///等同于
+      var thunk = function () {
+        return x + 5;
+      };
+      function f(thunk) {
+        return thunk * 2;
+      }
+
+      ///JavaScript语言的thunk函数
+      ///正常版本的readFile (多参数版本)
+      fs.readFile(fileName, Callback);
+
+      ///Thunk版本的readFile(单参数版本)
+      var thunk = function (fileName) {
+        return function (callback) {
+          return fs.readFile(fileName, callback);
+        };
+      };
+      var readFileThunk = thunk(fileName);
+      readFileThunk(callback);
+
+      ///thunk函数转换器
+      var thunk = function (fn) {
+        return function () {
+          var args = Array.prototype.slice.callback(arguments);
+          return function (callback) {
+            args.push(callback);
+            return fn.apply(this, args);
+          };
+        };
+      };
+      ///es6版本
+      const Thunk = function (fn) {
+        return function (...args) {
+          return function (callback) {
+            return fn.call(this, ...args, callback);
+          };
+        };
+      };
+      var readFileThunk = Thunk(fs.readFile);
+      readFileThunk(fileA)(callback);
+
+      function f(a, cb) {
+        cb(a);
+      }
+      const ft = Thunk(f);
+      ft(1)(console.log);
+
+      ///Thunkify模块
+      ///Generator 函数的流程管理
+      function* gen() {
+        //...
+      }
+      var g = gen();
+      var res = g.next();
+
+      while (!res.done) {
+        console.log(res.value);
+        res = g.next();
+      }
+
+      ///上面的不完美 如果要保证前一步执行完再还行后面一步  前边的这个就不行
+      var fs = require("fs");
+      var thunkify = require("thunkify");
+      var readFileThunk = thunkify(fs.readFile);
+
+      var gen = function* () {
+        var r1 = yield readFileThunk("/etc/fstab");
+        console.log(r1.toString());
+        var r2 = yield readFileThunk("/etc/shells");
+        console.log(r2.toString());
+      };
+
+      function* gen() {};
+      var g = gen();
+      var r1 = g.next();
+      r1.value(function (err, data){
+        if (err){throw err};
+        var r2 = g.next(data);
+        r2.value(function (err,data){
+          if(err) throw err;
+          g.next(data);
+        })
+      })
+    </script>
+    <h1>Directions</h1>
+    <p>Take the 305 S exit to Webville - go 0.4 mi</p>
+    <p>Continue on 305 - go 12 mi</p>
+    <p>Turn right at Structure Ave N - go 0.6 mi</p>
+    <p>Turn right and head toward Structure Ave N - go 0.0 mi</p>
+    <p>Turn right at Structure Ave N - go 0.7 mi</p>
+    <p>Continue on Structure Ave S - go 0.2 mi</p>
+    <p>Turn right at SW Presentation Way - go 0.0 mi</p>
+  </body>
+</html>

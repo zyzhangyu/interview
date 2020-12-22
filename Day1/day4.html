@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+
+  <body>
+    <h1>写一个方法把下划线命名转成大驼峰命名?</h1>
+
+
+
+    <h2>我给这一段添加了一个半透明的边框用 background-clip: padding-box</h2>
+    <ul style="background-clip: padding-box; border: 10px dashed hsl(0, 0%, 100%, .5); background: tomato;">
+      <li>
+        <label for="">toUpperCase</label>
+
+        <p>
+          toUpperCase()
+          方法将调用该方法的字符串转为大写形式并返回（如果调用该方法的值不是字符串类型会被强制转换）。
+        </p>
+      </li>
+
+      <li>
+        <label for="">split</label>
+
+        <p>
+          split()
+          方法使用指定的分隔符字符串将一个String对象分割成子字符串数组，以一个指定的分割字串来决定每个拆分的位置。
+        </p>
+      </li>
+
+      <p><code> function changeStr(str){ </code></p>
+      <p><code> if (str.split("_").length==1){return }</code></p>
+      <p><code>return str.split('_').reduce((a,b) => {</code></p>
+
+      <p><code>console.log("a=",a) console.log("b=",b)</code></p>
+
+      <p>
+        <code>return a+b.substring(0,1).toUpperCase()+b.substring(1);</code>
+      </p>
+
+      <p><code>})</code></p>
+
+      <p><code>}</code></p>
+    </ul>
+    <script>
+      function changeStr(str) {
+        if (str.split("_").length == 1) {
+          return;
+        }
+
+        return str.split("_").reduce((a, b) => {
+          console.log("a=", a);
+          console.log("b=", b);
+          return a + b.substring(0, 1).toUpperCase() + b.substring(1);
+        });
+      }
+
+      console.log(changeStr("this_is_a_good_boy"));
+    </script>
+
+    <script>
+      async function async1() {
+        console.log("async1 start");
+        await async2();
+        console.log("async1 end");
+      }
+      async function async2() {
+        console.log("async2");
+      }
+      console.log("script start");
+      setTimeout(function () {
+        console.log("setTimeout");
+      }, 0);
+      async1();
+      new Promise(function (resolve) {
+        console.log("promise1");
+        resolve();
+      }).then(function () {
+        console.log("promise2");
+      });
+      console.log("script end");
+    </script>
+  </body>
+</html>
+
+ ///宏
+ console.log("setTimeout");
+
+ ///微
+ console.log("async1 end");
+ console.log("promise2");
+
+ ///输出
+ console.log("script start");
+ console.log("async1 start");
+ console.log("async2");
+ console.log("promise1");
+ console.log("script end");
+
+ console.log("async1 end");
+ console.log("promise2");
+
+ console.log("setTimeout");

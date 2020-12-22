@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head><title>第三天</title></head>
+<body>
+    
+    <h1> 去除字符串中最后一个指定的字符
+    </h1>
+    <script>
+        
+    console.log("去除")
+    function removeLastTarget(str, target){
+        const index = str.lastIndexOf(target);
+        return str.substring(0,index) + str.substring(index+1)
+    }
+    console.log(removeLastTarget("abcabcyqqq",'y'))
+    console.log(removeLastTarget("abcabcyqqqy",'y'))
+    </script>
+</body>
+</html>

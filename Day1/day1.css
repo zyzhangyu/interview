@@ -1,0 +1,41 @@
+body {
+    min-width: 550px; /* 2x leftContent width + rightContent width */
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  #header,
+  #footer {
+      height: 60px;
+      line-height: 60px;
+      background-color: gray;
+  }
+
+  #container {
+      overflow: hidden;
+      padding: 0 200px;
+  }
+
+  .column {
+      float: left;
+      position: relative;
+  }
+  #center {
+      width: 100%;
+      background-color: greenyellow;
+  }
+
+  #left {
+
+      width: 200px;
+      background-color: red;
+      margin-left: -100%;
+      left: -200px;
+  }
+
+  #right {
+      background-color: seagreen;
+      width: 200px;
+      margin-left: -200px;
+      right: -200px;
+  }

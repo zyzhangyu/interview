@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="day1.css" />
+    <style>
+      @import url(day1_other.css);
+    </style>
+  </head>
+
+  <body>
+    <script>
+      console.log("随机数组");
+      function randoms(capacity, arr = []) {
+        if (capacity == 0) {
+          return arr;
+        }
+        let rand = Math.floor(Math.random() * 30) + 2;
+
+        if (!arr.includes(rand)) {
+          arr.push(rand);
+          capacity--;
+        }
+        return randoms(capacity, arr);
+      }
+
+      console.log(randoms(5));
+    </script>
+
+    <h1>圣杯布局 使用link导入css</h1>
+
+    <h1>页面导入样式时，使用link和@import有什么区别？</h1>
+    <ul>
+      <li>link是HTML标签，@import是css提供的。</li>
+      <li>
+        link引入的样式页面加载时同时加载，@import引入的样式需等页面加载完成后再加载。
+      </li>
+      <li>link没有兼容性问题，@import不兼容ie5以下。</li>
+      <li>link可以通过js操作DOM动态引入样式表改变样式，而@import不可以。</li>
+    </ul>
+
+    <h2>这个解题挺好,从属关系,加载顺序,兼容性,DOM可操作性,权重区别</h2>
+    <ul>
+      <li>
+        从属关系的区别：link属于XHTML标签，而@import是CSS提供的语法规则，link除了加载CSS，还可以定义RSS，定义rel连接属性等，@import就只能加载CSS。
+      </li>
+      <li>
+        加载顺序的区别：页面加载时，link会同时被加载，而@import引用的CSS会等页面被加载完后再加载。
+      </li>
+      <li>
+        兼容性的区别：@import只有IE5以上才能被识别，而link是XHTML标签，无兼容问题
+      </li>
+      <li>
+        DOM可控性区别：通过js操作DOM,可以插入link标签来改变样式；由于DOM方法是基于文档的，无法使用@import方式插入样式
+      </li>
+      <li>
+        权重区别(争议)：可参考：https://www.cnblogs.com/my--sunshine/p/6872224.html
+      </li>
+    </ul>
+
+    <h1>圣杯布局和双飞翼布局的理解和区别，并用代码实现</h1>
+    <p><em>圣杯布局 center和left与right是整体</em></p>
+    <p><em>双飞翼布局 center和left与right不是一个整体 是同级关系</em></p>
+
+    <p>
+      圣杯重点: center在前 column中的元素全部float:left
+      利用margin-left为复数将三个元素调整到统一行中 然后利用lfet为负数
+      和right为复数调整到指定位置
+    </p>
+
+    <div id="header">#header</div>
+    <div id="container">
+      <div id="center" class="column">#center</div>
+      <div id="left" class="column">#left</div>
+      <div id="right" class="column">#right</div>
+    </div>
+    <div id="footer">#footer</div>
+
+    <h1>双飞翼布局部分 用@import导入样式</h1>
+    <div id="top">上部</div>
+    <div id="middle">
+      <div id="inside">中部</div>
+    </div>
+    <div id="leading">左部</div>
+    <div id="trailing">右部</div>
+    <div id="bottom">下部</div>
+
+    <h1>JS题:用递归算法实现，数组长度为5且元素的随机数在2-32间不重复的值</h1>
+    <p>Math.floor() 返回小于或等于一个给定数字的最大整数。</p>
+    <p>Math.random() 函数返回一个浮点数, 伪随机数在范围从0到小于1，</p>
+    <ul>
+      <li>
+        <h5>生成一个长度为5的空数组arr。</h5>
+        <code>var arr = new Array(5);</code>
+      </li>
+
+      <li><h5>生成一个（2－32）之间的随机整数rand。</h5></li>
+    </ul>
+
+
+
+
+    <h5>完成代码</h5>
+    <code>
+        function randoms(capacity, arr = []) {
+            if (capacity == 0) {
+              return arr;
+            }
+            let rand = Math.floor(Math.random() * 30) + 2;
+    
+            if (!arr.includes(rand)) {
+              arr.push(rand);
+              capacity--;
+            }
+            return randoms(capacity, arr);
+          }
+    
+          console.log(randoms(5));
+    </code>
+
+
+    <h1>每日一个标签</h1>
+  </body>
+</html>
