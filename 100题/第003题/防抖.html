@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>防抖</title>
+  </head>
+  <body>
+    <script>
+      function debounce(func, wait) {
+        let _this = this;
+        let timeout; ///这个timeout写在函数里面可定不行呀
+
+        ///一开始timeout的值肯定是undefined
+        console.log("进入了debounce事件");
+        return function () {
+          ///此时function内部的this是window
+          clearTimeout(timeout);
+
+          timeout = setTimeout(function () {
+            func.call(_this, 110);
+          }, wait);
+        };
+      }
+
+      function clickButton(a) {
+        console.log("用户点了按钮,并且传参", a);
+      }
+
+      const aDebounce = debounce(clickButton, 1000);
+    </script>
+
+    <button onclick="aDebounce()">事件防抖</button>
+  </body>
+</html>

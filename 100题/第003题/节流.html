@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>节流</title>
+  </head>
+  <body>
+    <script>
+      
+      function throttle(func, wait) {
+        // console.log("触发节流函数", timeout);
+
+        return function () {
+          let timeout;
+          let _this = this;
+          let args = arguments;
+          console.log("timeout ===", timeout);
+          if (!timeout) {
+            timeout = setTimeout(function () {
+              func.apply(_this, arguments);
+              timeout = null;
+            }, wait);
+          }
+        };
+      }
+
+      function clickButton() {
+        console.log("用户点了按钮,并且传参");
+      }
+
+      const aThrottle = throttle(clickButton, 1000);
+
+      function log1() {
+        let a = aThrottle();
+        console.log("a=", a);
+      }
+
+      function log2() {
+        let b = throttle(clickButton, 1000)();
+        console.log("b=", b);
+      }
+    </script>
+
+    <button onclick="aThrottle()">事件节流</button>
+    <!-- A按钮 -->
+    <button onClick="this.throttle(clickButton, 1000)()">另一个事件节流</button>
+    <!-- B按钮 -->
+
+    <button onclick="log1()">log1</button>
+    <button onclick="log2()">log2</button>
+  </body>
+</html>
